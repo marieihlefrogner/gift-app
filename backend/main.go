@@ -4,6 +4,7 @@ import (
 	"gift-app/config"
 	"gift-app/handlers"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
@@ -14,13 +15,18 @@ func main() {
 
 	config.Connect()
 
+	app.Use(logger.New())
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
+
 	app.Get("/gifts", handlers.GetGifts)
 	app.Get("/gifts/:id", handlers.GetGift)
 	app.Post("/gifts", handlers.AddGift)
 	app.Put("/gifts/:id", handlers.UpdateGift)
 	app.Delete("/gifts/:id", handlers.RemoveGift)
-
-	app.Use(logger.New())
 
 	app.Listen(":8080")
 }

@@ -45,8 +45,10 @@ func UpdateGift(c *fiber.Ctx) error {
 		return c.Status(503).SendString(err.Error())
 	}
 
-	config.Database.Where("id = ?", id).Updates(&gift)
-	return c.Status(200).JSON(gift)
+	config.Database.Where("ID = ?", id).Updates(&gift)
+
+	return GetGift(c)
+	//return c.Status(200).JSON(gift)
 }
 
 func RemoveGift(c *fiber.Ctx) error {
