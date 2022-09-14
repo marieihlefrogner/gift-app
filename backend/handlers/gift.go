@@ -10,7 +10,7 @@ func GetGift(c *fiber.Ctx) error {
 	id := c.Params("id")
 	var gift entities.Gift
 
-	result := config.Database.Find(&gift, id)
+	result := config.Database.Where("gift_id = ?", id).Find(&gift)
 
 	if result.RowsAffected == 0 {
 		return c.SendStatus(404)
@@ -23,7 +23,7 @@ func UseGift(c *fiber.Ctx) error {
 	id := c.Params("id")
 
 	gift := new(entities.Gift)
-	config.Database.First(&gift, id)
+	config.Database.Where("gift_id = ?", id).First(&gift)
 
 	gift.Amount = gift.Amount - 1
 

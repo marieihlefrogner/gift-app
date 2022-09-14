@@ -1,5 +1,5 @@
 export type Gift = {
-    ID: number;
+    giftId: number;
     name: string;
     displayText: string;
     amount: number;

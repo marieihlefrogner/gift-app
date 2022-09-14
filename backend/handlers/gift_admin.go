@@ -13,7 +13,7 @@ func GetGifts(c *fiber.Ctx) error {
 	return c.Status(200).JSON(gifts)
 }
 
-func AddGift(c *fiber.Ctx) error {
+func CreateGift(c *fiber.Ctx) error {
 	gift := new(entities.Gift)
 
 	if err := c.BodyParser(gift); err != nil {
@@ -28,7 +28,7 @@ func UpdateGift(c *fiber.Ctx) error {
 	id := c.Params("id")
 
 	existingGift := new(entities.Gift)
-	config.Database.First(&existingGift, id)
+	config.Database.Where("gift_id = ?", id).First(&existingGift)
 
 	data := new(entities.Gift)
 
@@ -49,7 +49,7 @@ func RemoveGift(c *fiber.Ctx) error {
 	id := c.Params("id")
 	var gift entities.Gift
 
-	result := config.Database.Delete(&gift, id)
+	result := config.Database.Where("gift_id = ?", id).Delete(&gift)
 
 	if result.RowsAffected == 0 {
 		return c.SendStatus(404)

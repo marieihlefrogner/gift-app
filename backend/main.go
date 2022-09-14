@@ -27,7 +27,7 @@ func main() {
 
 	admin := app.Group("/admin")
 	admin.Get("/gifts", handlers.GetGifts)
-	admin.Post("/gifts", handlers.AddGift)
+	admin.Post("/gifts", handlers.CreateGift)
 	admin.Get("/gifts/:id", handlers.GetGift)
 	admin.Put("/gifts/:id", handlers.UpdateGift)
 	admin.Delete("/gifts/:id", handlers.RemoveGift)
