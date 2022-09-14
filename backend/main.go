@@ -22,11 +22,15 @@ func main() {
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
-	app.Get("/gifts", handlers.GetGifts)
 	app.Get("/gifts/:id", handlers.GetGift)
-	app.Post("/gifts", handlers.AddGift)
-	app.Put("/gifts/:id", handlers.UpdateGift)
-	app.Delete("/gifts/:id", handlers.RemoveGift)
+	app.Post("/gifts/:id/use", handlers.UseGift)
+
+	admin := app.Group("/admin")
+	admin.Get("/gifts", handlers.GetGifts)
+	admin.Post("/gifts", handlers.AddGift)
+	admin.Get("/gifts/:id", handlers.GetGift)
+	admin.Put("/gifts/:id", handlers.UpdateGift)
+	admin.Delete("/gifts/:id", handlers.RemoveGift)
 
 	app.Listen(":8080")
 }

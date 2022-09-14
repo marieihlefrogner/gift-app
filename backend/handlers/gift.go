@@ -6,13 +6,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetGifts(c *fiber.Ctx) error {
-	var gifts []entities.Gift
-
-	config.Database.Find(&gifts)
-	return c.Status(200).JSON(gifts)
-}
-
 func GetGift(c *fiber.Ctx) error {
 	id := c.Params("id")
 	var gift entities.Gift
@@ -26,40 +19,19 @@ func GetGift(c *fiber.Ctx) error {
 	return c.Status(200).JSON(&gift)
 }
 
-func AddGift(c *fiber.Ctx) error {
-	gift := new(entities.Gift)
-
-	if err := c.BodyParser(gift); err != nil {
-		return c.Status(503).SendString(err.Error())
-	}
-
-	config.Database.Create(&gift)
-	return c.Status(201).JSON(gift)
-}
-
-func UpdateGift(c *fiber.Ctx) error {
-	gift := new(entities.Gift)
+func UseGift(c *fiber.Ctx) error {
 	id := c.Params("id")
 
-	if err := c.BodyParser(gift); err != nil {
-		return c.Status(503).SendString(err.Error())
+	gift := new(entities.Gift)
+	config.Database.First(&gift, id)
+
+	gift.Amount = gift.Amount - 1
+
+	if gift.Amount < 0 {
+		return c.SendStatus(400)
 	}
 
-	config.Database.Where("ID = ?", id).Updates(&gift)
+	config.Database.Save(&gift)
 
 	return GetGift(c)
-	//return c.Status(200).JSON(gift)
-}
-
-func RemoveGift(c *fiber.Ctx) error {
-	id := c.Params("id")
-	var gift entities.Gift
-
-	result := config.Database.Delete(&gift, id)
-
-	if result.RowsAffected == 0 {
-		return c.SendStatus(404)
-	}
-
-	return c.SendStatus(200)
 }
