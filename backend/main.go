@@ -36,7 +36,8 @@ func main() {
 	admin.Put("/gifts/:id", handlers.UpdateGift)
 	admin.Delete("/gifts/:id", handlers.RemoveGift)
 
-	app.Static("/*", "./public")
+	app.Static("/", "./public")
+	app.Static("*", "./public/index.html")
 
 	port := os.Getenv("PORT")
 
