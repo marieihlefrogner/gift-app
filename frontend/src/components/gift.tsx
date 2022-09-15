@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Params, useParams} from "react-router-dom";
+import emoji from 'emoji-dictionary';
 import {useGift} from "../hooks/useGift";
 import api from "../api";
 import './gift.scss';
@@ -28,6 +29,10 @@ export const DisplayGift = () => {
     )
   }
 
+  const getEmoji = (name: string) => (
+    emoji.getUnicode(name)
+  );
+
   const Button = ({i}: { i: number }) => {
     const [pressed, setPressed] = useState<boolean>(false);
 
@@ -40,7 +45,7 @@ export const DisplayGift = () => {
 
     return (
       <div key={i} className={className} role="button" tabIndex={0} onClick={onClick}>
-        {gift.displayText}
+        {getEmoji(gift.displayText)}
       </div>
     )
   }
@@ -49,7 +54,7 @@ export const DisplayGift = () => {
     <div className="container">
       <div className="gift">
         <h1>{gift.name}</h1>
-        <p>{gift.amount > 0 ? gift.description: `Ingen flere ${gift.displayText} igjen :(`}</p>
+        <p>{gift.amount > 0 ? gift.description: `Ingen flere ${getEmoji(gift.displayText)} igjen :(`}</p>
         <div className="gift-buttons">
           {[...Array(gift.amount)].map((_, i) => <Button i={i}/>)}
         </div>
