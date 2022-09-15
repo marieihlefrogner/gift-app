@@ -24,9 +24,6 @@ func main() {
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
-	app.Static("/", "./frontend-build")
-	app.Static("/gift/*", "./frontend-build")
-
 	api := app.Group("/api")
 
 	api.Get("/gifts/:id", handlers.GetGift)
@@ -38,6 +35,8 @@ func main() {
 	admin.Get("/gifts/:id", handlers.GetGift)
 	admin.Put("/gifts/:id", handlers.UpdateGift)
 	admin.Delete("/gifts/:id", handlers.RemoveGift)
+
+	app.Static("/*", "./frontend-build")
 
 	port := os.Getenv("PORT")
 
