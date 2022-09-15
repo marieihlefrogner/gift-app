@@ -25,6 +25,7 @@ func main() {
 	}))
 
 	app.Static("/", "./frontend-build")
+	app.Static("/gift/*", "./frontend-build")
 
 	api := app.Group("/api")
 
