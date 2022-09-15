@@ -12,10 +12,6 @@ import (
 
 // https://dev.to/franciscomendes10866/how-to-build-rest-api-using-go-fiber-and-gorm-orm-2jbe
 
-func serveStatic(app *fiber.App) {
-	app.Static("/", "./build")
-}
-
 func main() {
 	app := fiber.New()
 
@@ -28,12 +24,14 @@ func main() {
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
-	//serveStatic(app)
+	app.Static("/", "./frontend-build")
 
-	app.Get("/gifts/:id", handlers.GetGift)
-	app.Post("/gifts/:id/use", handlers.UseGift)
+	api := app.Group("/api")
 
-	admin := app.Group("/admin")
+	api.Get("/gifts/:id", handlers.GetGift)
+	api.Post("/gifts/:id/use", handlers.UseGift)
+
+	admin := api.Group("/admin")
 	admin.Get("/gifts", handlers.GetGifts)
 	admin.Post("/gifts", handlers.CreateGift)
 	admin.Get("/gifts/:id", handlers.GetGift)
@@ -43,7 +41,7 @@ func main() {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		port = "5000"
+		port = "8080"
 	}
 
 	log.Printf("Listening on port %s\n\n", port)

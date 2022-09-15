@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Gift } from "../types";
 
-const baseUrl = "http://localhost:8080";
+const baseUrl = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:8080/api';
 
 export const getGift = async (id: string) => {
     const response = await axios.get<Gift>(`${baseUrl}/gifts/${id}`);
