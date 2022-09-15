@@ -7,24 +7,19 @@ import (
 	"os"
 )
 
-var dbUser = os.Getenv("DBUSER")
-var dbPass = os.Getenv("DBPASS")
-var dbHost = os.Getenv("DBHOST")
-var dbPort = os.Getenv("DBPORT")
+var DatabaseUrl = os.Getenv("DB_URL")
 
 var Database *gorm.DB
 
 func Connect() error {
-	if dbUser == "" || dbPass == "" || dbHost == "" || dbPort == "" {
-		panic("Missing environment variables for database connection.")
+	if DatabaseUrl == "" {
+		panic("Missing environment variable for database connection.")
 		return nil
 	}
 
-	var DatabaseUri = dbUser + ":" + dbPass + "@tcp(" + dbHost + ":" + dbPort + ")/gorm?charset=utf8mb4&parseTime=True&loc=Local"
-
 	var err error
 
-	Database, err = gorm.Open(mysql.Open(DatabaseUri), &gorm.Config{
+	Database, err = gorm.Open(mysql.Open(DatabaseUrl), &gorm.Config{
 		SkipDefaultTransaction: true,
 		PrepareStmt:            true,
 	})
