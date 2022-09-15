@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Gift } from "../types";
 
-const baseUrl = "http://localhost:8080"
+const baseUrl = "http://localhost:8080";
 
 export const getGift = async (id: string) => {
     const response = await axios.get<Gift>(`${baseUrl}/gifts/${id}`);

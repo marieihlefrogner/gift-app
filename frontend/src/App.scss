@@ -1,0 +1,34 @@
+body {
+    background: linear-gradient(238deg, #fd8800, #fd008f, #9700fd, #0054fd, #05c7e6, #4bd58d);
+    background-size: 1200% 1200%;
+    -webkit-animation: rainbow 30s ease infinite;
+    animation: rainbow 30s ease infinite;
+
+    .app {
+        width: 100vw;
+        height: 100vh;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        h1 {
+            font-family: cursive;
+            font-size: 45px;
+        }
+
+        p {
+            font-family: serif;
+            font-size: 24px;
+        }
+    }
+}
+
+@-webkit-keyframes rainbow {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+}
+@keyframes rainbow {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+}

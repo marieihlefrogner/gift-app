@@ -1,14 +1,13 @@
 import React from 'react';
 import {Routes, Route, BrowserRouter} from 'react-router-dom';
 import {DisplayGift} from "./components/gift";
-import './App.css';
+import './style/reset.css';
+import './App.scss';
 
 function App() {
-
   return (
     <BrowserRouter>
-      <div className="App">
-        <h1>Gift App</h1>
+      <div className="app">
         <Routes>
           <Route path="gifts">
             <Route path=":id" element={<DisplayGift />}/>

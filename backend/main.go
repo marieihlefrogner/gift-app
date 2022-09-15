@@ -6,9 +6,15 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"log"
+	"os"
 )
 
 // https://dev.to/franciscomendes10866/how-to-build-rest-api-using-go-fiber-and-gorm-orm-2jbe
+
+func serveStatic(app *fiber.App) {
+	app.Static("/", "./build")
+}
 
 func main() {
 	app := fiber.New()
@@ -22,6 +28,8 @@ func main() {
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
+	//serveStatic(app)
+
 	app.Get("/gifts/:id", handlers.GetGift)
 	app.Post("/gifts/:id/use", handlers.UseGift)
 
@@ -32,5 +40,13 @@ func main() {
 	admin.Put("/gifts/:id", handlers.UpdateGift)
 	admin.Delete("/gifts/:id", handlers.RemoveGift)
 
-	app.Listen(":8080")
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "5000"
+	}
+
+	log.Printf("Listening on port %s\n\n", port)
+
+	app.Listen(":" + port)
 }

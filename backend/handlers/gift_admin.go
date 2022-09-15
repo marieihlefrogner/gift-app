@@ -38,6 +38,7 @@ func UpdateGift(c *fiber.Ctx) error {
 
 	existingGift.Name = data.Name
 	existingGift.DisplayText = data.DisplayText
+	existingGift.Description = data.Description
 	existingGift.Amount = data.Amount
 
 	config.Database.Save(&existingGift)

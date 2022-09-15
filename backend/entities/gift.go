@@ -10,6 +10,7 @@ type Gift struct {
 	GiftID      uuid.UUID `gorm:"type:char(36);unique;not null;" json:"giftId"`
 	Name        string    `json:"name"`
 	DisplayText string    `json:"displayText"`
+	Description string    `json:"description"`
 	Amount      int       `json:"amount"`
 }
 
