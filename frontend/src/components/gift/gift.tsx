@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import {Params, useParams} from "react-router-dom";
 import emoji from 'emoji-dictionary';
-import {useGift} from "../hooks/useGift";
-import api from "../api";
+import {useGift} from "../../hooks/useGift";
+import Loader from "../loader/loader";
+import api from "../../api";
 import './gift.scss';
 
 export const DisplayGift = () => {
@@ -25,8 +26,8 @@ export const DisplayGift = () => {
 
   if (loading || !gift) {
     return (
-      <div>Loading...</div>
-    )
+      <Loader />
+    );
   }
 
   const getEmoji = (name: string) => (

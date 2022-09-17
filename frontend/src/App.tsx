@@ -1,8 +1,8 @@
 import React from 'react';
 import {Routes, Route, BrowserRouter} from 'react-router-dom';
-import {DisplayGift} from "./components/gift";
+import {DisplayGift} from "./components/gift/gift";
 import './style/reset.css';
-import './App.scss';
+import './style/App.scss';
 
 function App() {
   return (
